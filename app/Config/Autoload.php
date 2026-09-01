@@ -39,6 +39,11 @@ class Autoload extends AutoloadConfig
      */
     public $psr4 = [
         APP_NAMESPACE => APPPATH,
+
+        // HMVC modules. Registering each one lets CodeIgniter auto-discover its
+        // Config/Routes.php and resolve its namespaced views and migrations.
+        'App\Modules\Admin' => APPPATH . 'Modules/Admin',
+        'App\Modules\User'  => APPPATH . 'Modules/User',
     ];
 
     /**

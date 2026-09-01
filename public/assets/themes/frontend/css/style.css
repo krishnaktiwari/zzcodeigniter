@@ -1,0 +1,383 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/*
+    Created on : 01-Sep-2026, 10:52:49 am
+    Author     : developer
+*/
+
+
+/* Base typography */
+:root {
+    --bs-font-sans-serif: 'Quicksand', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: var(--bs-font-sans-serif);
+}
+
+/* Anchor targets clear the sticky header */
+html {
+    scroll-padding-top: calc(var(--nav-height) + 1rem);
+}
+
+
+/* ==========================================================================
+   Site header / navigation
+   ========================================================================== */
+
+:root {
+    --nav-height: 4.5rem;
+    --nav-height-sm: 3.75rem;
+    --nav-bg: rgba(255, 255, 255, .82);
+    --nav-bg-solid: #fff;
+    --nav-fg: #4b5563;
+    --nav-fg-strong: #111827;
+    --nav-accent: #0d6efd;
+    --nav-accent-soft: rgba(13, 110, 253, .09);
+    --nav-border: rgba(17, 24, 39, .08);
+    --nav-shadow: 0 1px 2px rgba(17, 24, 39, .04), 0 12px 28px -18px rgba(17, 24, 39, .35);
+    --nav-radius: .625rem;
+    --nav-ease: cubic-bezier(.4, 0, .2, 1);
+    --nav-speed: .25s;
+}
+
+[data-bs-theme="dark"] {
+    --nav-bg: rgba(16, 20, 28, .78);
+    --nav-bg-solid: #10141c;
+    --nav-fg: #a7b0bd;
+    --nav-fg-strong: #f8fafc;
+    --nav-accent: #6ea8fe;
+    --nav-accent-soft: rgba(110, 168, 254, .14);
+    --nav-border: rgba(255, 255, 255, .1);
+    --nav-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 12px 28px -18px rgba(0, 0, 0, .8);
+}
+
+.site-header {
+    --bs-navbar-padding-y: 0;
+    min-height: var(--nav-height);
+    padding-block: 0;
+    background-color: var(--nav-bg-solid);
+    border-bottom: 1px solid var(--nav-border);
+    transition:
+        min-height var(--nav-speed) var(--nav-ease),
+        background-color var(--nav-speed) var(--nav-ease),
+        box-shadow var(--nav-speed) var(--nav-ease),
+        border-color var(--nav-speed) var(--nav-ease);
+}
+
+/* Frosted glass only where it is actually supported */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .site-header {
+        background-color: var(--nav-bg);
+        -webkit-backdrop-filter: saturate(180%) blur(14px);
+        backdrop-filter: saturate(180%) blur(14px);
+    }
+}
+
+/* Toggled by script.js once the page is scrolled */
+.site-header.is-scrolled {
+    min-height: var(--nav-height-sm);
+    box-shadow: var(--nav-shadow);
+}
+
+.site-header > .container,
+.site-header > .container-fluid {
+    min-height: inherit;
+    gap: .5rem;
+}
+
+
+/* Brand
+   ========================================================================== */
+
+.site-header .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding-block: .5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: var(--nav-fg-strong);
+    transition: opacity var(--nav-speed) var(--nav-ease);
+}
+
+.site-header .navbar-brand:hover,
+.site-header .navbar-brand:focus {
+    color: var(--nav-fg-strong);
+    opacity: .75;
+}
+
+.site-header .navbar-brand img,
+.site-header .navbar-brand svg {
+    display: block;
+    height: 2rem;
+    width: auto;
+}
+
+
+/* Links
+   ========================================================================== */
+
+.site-header .navbar-nav {
+    --bs-nav-link-padding-x: .875rem;
+    --bs-nav-link-padding-y: .625rem;
+    align-items: stretch;
+    gap: .125rem;
+}
+
+.site-header .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .9375rem;
+    font-weight: 600;
+    color: var(--nav-fg);
+    border-radius: var(--nav-radius);
+    transition:
+        color var(--nav-speed) var(--nav-ease),
+        background-color var(--nav-speed) var(--nav-ease);
+}
+
+.site-header .nav-link:hover,
+.site-header .nav-link:focus-visible,
+.site-header .nav-item.show > .nav-link {
+    color: var(--nav-fg-strong);
+}
+
+.site-header .nav-link.active,
+.site-header .nav-link[aria-current="page"] {
+    color: var(--nav-accent);
+}
+
+/* Keyboard focus stays visible, mouse clicks stay clean */
+.site-header :is(.nav-link, .navbar-brand, .navbar-toggler, .dropdown-item):focus-visible {
+    outline: 2px solid var(--nav-accent);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+/* Caret: a chevron that flips when the menu opens */
+.site-header .dropdown-toggle::after {
+    width: .45em;
+    height: .45em;
+    margin-left: .1em;
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg) translate(-.1em, -.15em);
+    vertical-align: middle;
+    transition: transform var(--nav-speed) var(--nav-ease);
+}
+
+.site-header .nav-item.show > .dropdown-toggle::after {
+    transform: rotate(-135deg) translate(-.05em, -.05em);
+}
+
+
+/* Desktop layout (>= lg)
+   ========================================================================== */
+
+@media (min-width: 992px) {
+
+    /* Sliding underline indicator */
+    .site-header .navbar-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        left: var(--bs-nav-link-padding-x);
+        right: var(--bs-nav-link-padding-x);
+        bottom: .25rem;
+        height: 2px;
+        border-radius: 2px;
+        background-color: currentColor;
+        transform: scaleX(0);
+        transform-origin: right center;
+        opacity: 0;
+        transition:
+            transform var(--nav-speed) var(--nav-ease),
+            opacity var(--nav-speed) var(--nav-ease);
+    }
+
+    .site-header .navbar-nav .nav-link:hover::after,
+    .site-header .navbar-nav .nav-link:focus-visible::after,
+    .site-header .navbar-nav .nav-link.active::after,
+    .site-header .navbar-nav .nav-item.show > .nav-link::after {
+        transform: scaleX(1);
+        transform-origin: left center;
+        opacity: 1;
+    }
+
+    /* Dropdown: fade + lift instead of a hard snap */
+    .site-header .dropdown-menu {
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-.4rem);
+        pointer-events: none;
+        margin-top: .25rem;
+        transition:
+            opacity var(--nav-speed) var(--nav-ease),
+            transform var(--nav-speed) var(--nav-ease),
+            visibility var(--nav-speed) var(--nav-ease);
+    }
+
+    .site-header .dropdown-menu.show {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
+
+
+/* Dropdown menu
+   ========================================================================== */
+
+.site-header .dropdown-menu {
+    --bs-dropdown-min-width: 12rem;
+    --bs-dropdown-padding-y: .375rem;
+    --bs-dropdown-item-padding-x: .875rem;
+    --bs-dropdown-item-padding-y: .5rem;
+    --bs-dropdown-border-color: var(--nav-border);
+    --bs-dropdown-link-hover-bg: var(--nav-accent-soft);
+    --bs-dropdown-link-active-bg: var(--nav-accent-soft);
+    --bs-dropdown-link-active-color: var(--nav-accent);
+    border-radius: calc(var(--nav-radius) + .25rem);
+    box-shadow: var(--nav-shadow);
+}
+
+.site-header .dropdown-item {
+    width: auto;
+    margin-inline: .375rem;
+    font-size: .9375rem;
+    font-weight: 500;
+    border-radius: .375rem;
+    transition:
+        background-color var(--nav-speed) var(--nav-ease),
+        color var(--nav-speed) var(--nav-ease),
+        padding-left var(--nav-speed) var(--nav-ease);
+}
+
+.site-header .dropdown-item:hover,
+.site-header .dropdown-item:focus {
+    padding-left: 1.125rem;
+    color: var(--nav-accent);
+}
+
+.site-header .dropdown-divider {
+    margin-block: .375rem;
+    border-top-color: var(--nav-border);
+    opacity: 1;
+}
+
+
+/* Toggler
+   ========================================================================== */
+
+.site-header .navbar-toggler {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    font-size: 1.125rem;
+    line-height: 1;
+    color: var(--nav-fg-strong);
+    cursor: pointer;
+    user-select: none;
+    border-radius: var(--nav-radius);
+    transition:
+        background-color var(--nav-speed) var(--nav-ease),
+        color var(--nav-speed) var(--nav-ease);
+}
+
+.site-header .navbar-toggler:hover {
+    background-color: var(--nav-accent-soft);
+    color: var(--nav-accent);
+}
+
+.site-header .navbar-toggler i {
+    display: block;
+    transition: transform var(--nav-speed) var(--nav-ease);
+}
+
+/* Bars -> X, driven by the aria-expanded state Bootstrap already maintains */
+.site-header .navbar-toggler i::before {
+    content: "\f0c9";
+}
+
+.site-header .navbar-toggler[aria-expanded="true"] i::before {
+    content: "\f00d";
+}
+
+.site-header .navbar-toggler[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+
+/* Mobile collapse panel (< lg)
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+    .site-header .navbar-collapse {
+        max-height: calc(100dvh - var(--nav-height));
+        margin-inline: -.75rem;
+        padding: .5rem .75rem 1rem;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .site-header .navbar-nav {
+        gap: .125rem;
+        padding-top: .5rem;
+        border-top: 1px solid var(--nav-border);
+    }
+
+    .site-header .nav-link {
+        padding: .75rem .875rem;
+    }
+
+    .site-header .nav-link:hover,
+    .site-header .nav-link:focus-visible,
+    .site-header .nav-link.active {
+        background-color: var(--nav-accent-soft);
+    }
+
+    .site-header .dropdown-menu {
+        margin: .125rem 0 .375rem .875rem;
+        padding-block: .25rem;
+        border: 0;
+        border-left: 2px solid var(--nav-border);
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .site-header .dropdown-item {
+        margin-inline: 0;
+        padding-left: .875rem;
+    }
+}
+
+
+/* Motion & print
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-header * {
+        transition-duration: .01ms !important;
+    }
+}
+
+@media print {
+    .site-header {
+        position: static;
+        box-shadow: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}
